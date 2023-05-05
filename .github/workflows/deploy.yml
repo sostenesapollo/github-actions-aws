@@ -39,7 +39,7 @@ jobs:
           #create_sub_cert: true
           
           # Remove the comment to destroy everything that was created
-          # stack_destroy: true
+          stack_destroy: true/
 
           checkout: true
 
