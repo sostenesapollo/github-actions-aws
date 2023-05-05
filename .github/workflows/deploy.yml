@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  IMAGE_NAME: nodomain
+  INSTANCE_TYPE: t2.micro
+  # DOMAIN: yourdomain.com
+  ECR_REPOSITORY: application-generic-images
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  EC2-Deploy:
+    runs-on: ubuntu-latest
+    steps:          
+      - id: deploy
+        name: Deploy
+        uses: sostenesapollo/github-actions-deploy-docker-to-ec2@feature/ecr
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_default_region: ${{ env.AWS_REGION }}
+          ec2_instance_type: ${{ env.INSTANCE_TYPE }}
+          aws_resource_identifier: '${{ env.IMAGE_NAME }}-generics'
+          tf_state_bucket: '${{ env.IMAGE_NAME }}-generics'
+          dot_env: ${{ secrets.DOT_ENV }}
+          ecr_repository: ${{ env.ECR_REPOSITORY }}
+
+          # Uncomnment these 3 commented lines if you're using a domain
+          #domain_name: ${{ env.DOMAIN }}
+          #sub_domain: ${{ env.IMAGE_NAME }}
+          #create_sub_cert: true
+          
+          # Remove the comment to destroy everything that was created
+          # stack_destroy: true
+
+          checkout: true
+
+          app_port: 3000

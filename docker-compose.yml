@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  app:
+    image: $IMAGE_URL
+    restart: always
+    env_file: .env
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    ports:
+      - 3000:3000
