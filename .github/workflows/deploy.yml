@@ -9,10 +9,10 @@ permissions:
 
 env:
   AWS_REGION: us-east-1
-  IMAGE_NAME: nodomain
+  IMAGE_NAME: nodom
   INSTANCE_TYPE: t2.micro
   # DOMAIN: yourdomain.com
-  ECR_REPOSITORY: application-generic-images
+  ECR_REPOSITORY: new-ecr-repo
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
